@@ -1,7 +1,6 @@
 import { AuthenticatedRequest } from "@/middlewares/ValidateFirebaseToken.middleware";
 import { newProduct, newProductBody } from "@/protocols/protocols";
-import { updateProductQuantityType } from "@/services";
-import productsServices from "@/services/products.service";
+import productsServices, { updateProductQuantityType } from "@/services/products.service";
 import { NextFunction, Request, Response } from "express";
 import httpStatus from "http-status";
 
