@@ -26,7 +26,7 @@ async function main() {
 
 main()
   .then(async () => {
-    console.log(await prisma.products_category.findMany())
+    console.log(await prisma.products_category.findMany())@
     await prisma.$disconnect();
   })
   .catch(async (e) => {
