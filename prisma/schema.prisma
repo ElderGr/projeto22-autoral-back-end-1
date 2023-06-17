@@ -46,7 +46,7 @@ model cart_item {
 }
 
 model product {
-  id Int @id @default(autoincrement())
+  id Int @unique @id @default(autoincrement())
   name String
   description String
   quantity Int
@@ -62,7 +62,7 @@ model product {
 
 model products_category {
   id Int @id @default(autoincrement())
-  name String
+  name String @unique
   description String 
   products product[]
   created_at DateTime @default(now())
