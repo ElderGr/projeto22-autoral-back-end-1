@@ -4,13 +4,14 @@
   "description": "",
   "main": "src/config/app.ts",
   "scripts": {
-    "dev": "npx nodemon src/config/app.ts",
+    "dev": "npx nodemon --watch 'src/' --exec 'ts-node -r tsconfig-paths/register ./src/config/app.ts' -e ts",
     "test": "npx dotenv -e .env.test npx jest"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@prisma/client": "^4.15.0",
+    "@types/joi": "^17.2.3",
     "cors": "^2.8.5",
     "dotenv": "^16.1.3",
     "express": "^4.18.2",
@@ -32,6 +33,7 @@
     "supertest": "^6.3.3",
     "ts-jest": "^29.1.0",
     "ts-node": "^10.9.1",
-    "typescript": "^5.1.3"
+    "tsconfig-paths": "^4.2.0",
+    "typescript": "^4.9.5"
   }
 }
