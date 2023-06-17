@@ -6,7 +6,7 @@ export default async function validateFirebaseToken(
   res: Response,
   next: NextFunction
 ) {
-  const token = req.headers.authorization as string;
+  const token = req.header('Authorization') as string;
 
   try {
     const decodedToken = await admin.auth().verifyIdToken(token);
