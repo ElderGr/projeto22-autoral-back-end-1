@@ -1,8 +1,18 @@
 import admin from "@/config/firebase";
 import { Response, Request, NextFunction } from "express";
+import httpStatus from "http-status";
+
+declare module "express-serve-static-core" {
+  interface Request {
+    userFirebaseId?: string;
+  }
+  interface Response {
+    userFirebaseId?: string;
+  }
+}
 
 export default async function validateFirebaseToken(
-  req: AuthenticatedRequest,
+  req: Request,
   res: Response,
   next: NextFunction
 ) {
@@ -11,14 +21,12 @@ export default async function validateFirebaseToken(
   try {
     const decodedToken = await admin.auth().verifyIdToken(token);
     req.userFirebaseId = decodedToken.uid
-    next();
+    return next();
   } catch (e) {
-    throw new Error("UNAUTHORIZED");
+    return generateUnauthorizedResponse(res)
   }
 }
 
-export type AuthenticatedRequest = Request & FBUserId;
-
-type FBUserId = {
-  userFirebaseId: string;
-};
+function generateUnauthorizedResponse(res: Response) {
+  res.status(httpStatus.UNAUTHORIZED).send(new Error('Unauthorized Error'));
+}
