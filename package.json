@@ -4,7 +4,7 @@
   "description": "",
   "main": "src/config/app.ts",
   "scripts": {
-    "dev": "npx nodemon --watch 'src/' --exec 'ts-node -r tsconfig-paths/register ./src/config/app.ts' -e ts",
+    "dev": "npx nodemon --watch 'src/' --exec ts-node -r tsconfig-paths/register ./src/config/app.ts -e ts",
     "test": "npx dotenv -e .env.test npx jest"
   },
   "author": "",

@@ -14,6 +14,12 @@ function handleApplicationErrors(
     });
   }
 
+  if (err.name === "UNATHORIZED") {
+    return res.status(httpStatus.UNAUTHORIZED).send({
+      message: err.message,
+    });
+  }
+
   if (err.name === "notFoundError") {
     return res.status(httpStatus.NOT_FOUND).send({
       message: err.message,
