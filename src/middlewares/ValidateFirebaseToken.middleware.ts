@@ -1,13 +1,15 @@
-import admin from "@/config/firebase";
+import userService from "@/services/users.service";
 import { Response, Request, NextFunction } from "express";
 import httpStatus from "http-status";
 
 declare module "express-serve-static-core" {
   interface Request {
-    userFirebaseId?: string;
+    userId?: number;
+    userFirebaseId: string;
   }
   interface Response {
-    userFirebaseId?: string;
+    userId?: number;
+    userFirebaseId: string;
   }
 }
 
@@ -16,17 +18,19 @@ export default async function validateFirebaseToken(
   res: Response,
   next: NextFunction
 ) {
-  const token = req.header('Authorization') as string;
-
+  const firebaseUID = req.header("Authorization") as string;
   try {
-    const decodedToken = await admin.auth().verifyIdToken(token);
-    req.userFirebaseId = decodedToken.uid
+    const user = await userService.findUserByFirebaseId(firebaseUID)
+    if (user?.id) req.userId = user.id;
+    req.userFirebaseId = firebaseUID;
+    console.log("passou");
+    
     return next();
   } catch (e) {
-    return generateUnauthorizedResponse(res)
+    return generateUnauthorizedResponse(res);
   }
 }
 
 function generateUnauthorizedResponse(res: Response) {
-  res.status(httpStatus.UNAUTHORIZED).send(new Error('Unauthorized Error'));
+  res.status(httpStatus.UNAUTHORIZED).send(new Error("Unauthorized Error"));
 }
