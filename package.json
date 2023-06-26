@@ -4,8 +4,13 @@
   "description": "",
   "main": "src/config/app.ts",
   "scripts": {
+    "build": "tsc",
+    "start": "npm run prisma migrate && node dist/config/app.js",
     "dev": "npx nodemon --watch 'src/' --exec ts-node -r tsconfig-paths/register ./src/config/app.ts -e ts",
     "test": "npx dotenv -e .env.test npx jest"
+  },
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
   },
   "author": "",
   "license": "ISC",
@@ -20,10 +25,11 @@
     "joi": "^17.9.2"
   },
   "devDependencies": {
+    "@faker-js/faker": "^8.0.2",
     "@types/cors": "^2.8.13",
     "@types/express": "^4.17.17",
     "@types/jest": "^29.5.2",
-    "@types/node": "^20.2.5",
+    "@types/node": "^20.3.1",
     "@types/supertest": "^2.0.12",
     "cross-env": "^7.0.3",
     "dotenv-cli": "^7.2.1",
